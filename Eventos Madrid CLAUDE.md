@@ -14,7 +14,7 @@ A curated discovery platform for concerts, theatre, nightlife, sports, and cultu
 
 ### Name & Concept
 **Eventos Madrid** — The premium events directory for Madrid, Spain.
-Tagline options: *"La noche, curada."* / *"Madrid, every night."* / *"Your Madrid. Your night."*
+Tagline options: “All of Madrid. One place.”
 
 ---
 
@@ -180,7 +180,7 @@ Tagline options: *"La noche, curada."* / *"Madrid, every night."* / *"Your Madri
 | Automation  | Make.com                          |
 | Email       | Klaviyo                           |
 | Payments    | Stripe                            |
-| Scheduling  | Cal.com                           |
+|                         |
 
 ---
 
@@ -256,9 +256,6 @@ Every page must include:
 
 Tally signup → Make.com webhook → Klaviyo (welcome email with Madrid Events Guide PDF) → Airtable CRM (log lead with source and preferences)
 
-## Featured Events Curation Flow (Weekly)
-
-Airtable "Featured" flag → Homepage carousel auto-populates → Make.com refreshes cache every Monday 08:00 CET → Klaviyo weekly newsletter sends Thursday 18:00 CET (peak open-rate for weekend plans)
 
 ---
 
