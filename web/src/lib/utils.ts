@@ -14,7 +14,8 @@ export function formatPrice(from?: number, to?: number, currency = "€"): strin
 }
 
 export function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
+  const date = new Date(`${dateStr}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return "Fecha pendiente";
   return new Intl.DateTimeFormat("es-ES", {
     weekday: "short",
     day: "numeric",
@@ -23,7 +24,8 @@ export function formatDate(dateStr: string): string {
 }
 
 export function formatDateTime(dateStr: string, timeStr: string): string {
-  const date = new Date(dateStr);
+  const date = new Date(`${dateStr}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return timeStr || "Fecha pendiente";
   const formatted = new Intl.DateTimeFormat("es-ES", {
     weekday: "short",
     day: "numeric",

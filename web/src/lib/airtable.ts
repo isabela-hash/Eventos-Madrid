@@ -183,7 +183,12 @@ function mapVenue(record: unknown): Venue {
 }
 
 function visibleEvent(event: Event): boolean {
-  return event.status === "active" && !["hidden", "unmatched", "cancelled"].includes(event.provider_status ?? "active");
+  return (
+    event.status === "active" &&
+    Boolean(event.name) &&
+    /^\d{4}-\d{2}-\d{2}$/.test(event.date_start) &&
+    !["hidden", "unmatched", "cancelled"].includes(event.provider_status ?? "active")
+  );
 }
 
 function attachOffers(events: Event[], offers: TicketOffer[]): Event[] {
