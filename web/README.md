@@ -1,5 +1,33 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Ticketing Data Setup
+
+Eventos Madrid uses Airtable as the editable source of truth and keeps provider credentials server-side.
+
+Required Airtable tables:
+
+- `Venues`: `name`, `slug`, `type`, `address`, `neighborhood`, `description`, `landing_copy`, `photo_urls`, `hero_video_url`, `provider`, `provider_organization_id`, `provider_location_id`, `provider_venue_id`, `active`.
+- `Events`: `name`, `slug`, `category`, `subcategory`, `venue_id`, `venue_name`, `neighborhood`, `date_start`, `time_start`, `price_from`, `currency`, `description`, `short_description`, `poster_url`, `provider`, `provider_event_id`, `provider_venue_id`, `provider_organization_id`, `provider_status`, `month`, `status`, `raw_provider_payload`, `last_synced_at`.
+- `Ticket Offers`: `event_id`, `provider`, `provider_offer_id`, `provider_price_id`, `name`, `description`, `price`, `currency`, `available`, `available_quantity`, `min_quantity`, `max_quantity`, `includes`, `checkout_url`, `status`, `raw_provider_payload`.
+
+Provider ownership:
+
+- Fourvenues: Sala de Despecho, Casa Pepa, Perreo Lab, Club Magno, Babylon, Houdinni, Todos Santos, Gunilla, Calle 365, Salvaje.
+- Xceed: Panthera, Istar, Victoria, Los Amantes.
+
+Environment variables are listed in `.env.example`. Without Airtable or provider keys, the app falls back to local mock data so pages remain visible.
+
+Sync and checkout routes:
+
+- `GET /api/events?date=YYYY-MM-DD`
+- `GET /api/venues/[slug]/events?month=YYYY-MM`
+- `POST /api/checkout/fourvenues`
+- `POST /api/sync/events?secret=SYNC_SECRET`
+- `POST /api/webhooks/fourvenues`
+- `POST /api/webhooks/xceed`
+
+For Vercel Cron, set `CRON_SECRET` or `SYNC_SECRET`; `vercel.json` schedules `/api/sync/events` daily. The sync pulls the next 60 days from Fourvenues by mapped venue and upserts `Events` plus `Ticket Offers`.
+
 ## Getting Started
 
 First, run the development server:

@@ -5,6 +5,8 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { EventCard } from "@/components/event-card";
 import { EventHero } from "@/components/event-hero";
+import { TicketPurchase } from "@/components/ticketing/ticket-purchase";
+import { getEventBySlug, getEvents } from "@/lib/airtable";
 import { mockEvents } from "@/lib/mock-data";
 
 interface EventPageProps {
@@ -48,11 +50,12 @@ export function generateStaticParams() {
   ];
 }
 
-export default function EventPage({ params }: EventPageProps) {
+export default async function EventPage({ params }: EventPageProps) {
   const categoryPage = categoryPages[params.slug];
 
   if (categoryPage) {
-    const events = mockEvents.filter((item) => item.category === categoryPage.category);
+    const allEvents = await getEvents();
+    const events = allEvents.filter((item) => item.category === categoryPage.category);
 
     return (
       <>
@@ -95,7 +98,7 @@ export default function EventPage({ params }: EventPageProps) {
     );
   }
 
-  const event = mockEvents.find((item) => item.slug === params.slug);
+  const event = await getEventBySlug(params.slug);
 
   if (!event) {
     notFound();
@@ -121,6 +124,21 @@ export default function EventPage({ params }: EventPageProps) {
         <p className="mt-5 text-base leading-8 text-[var(--color-text-secondary)]">
           {event.description ?? event.short_description}
         </p>
+
+        <div className="mt-8 rounded-[8px] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+          <p className="font-mono text-xs uppercase tracking-widest text-[var(--color-gold)]">
+            Compra interna
+          </p>
+          <h3 className="mt-2 font-display text-2xl font-semibold tracking-display text-[var(--color-champagne)]">
+            Elige entrada y continua al pago seguro
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-[var(--color-text-secondary)]">
+            La seleccion ocurre aqui. El pago final lo procesa {event.provider === "fourvenues" ? "Fourvenues" : event.provider === "xceed" ? "Xceed" : "el proveedor"}.
+          </p>
+          <div className="mt-5">
+            <TicketPurchase event={event} />
+          </div>
+        </div>
       </main>
 
       <Footer />

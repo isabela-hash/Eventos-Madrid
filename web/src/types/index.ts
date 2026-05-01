@@ -1,3 +1,27 @@
+export type TicketProvider = "fourvenues" | "xceed" | "manual";
+
+export type ProviderStatus = "active" | "sold_out" | "cancelled" | "unmatched" | "hidden";
+
+export interface TicketOffer {
+  id: string;
+  event_id: string;
+  provider: TicketProvider;
+  provider_offer_id?: string;
+  provider_price_id?: string;
+  name: string;
+  description?: string;
+  price: number;
+  currency: string;
+  available: boolean;
+  available_quantity?: number;
+  min_quantity: number;
+  max_quantity: number;
+  includes?: string;
+  checkout_url?: string;
+  status: "active" | "sold_out" | "hidden";
+  raw_provider_payload?: unknown;
+}
+
 export interface Event {
   id: string;
   name: string;
@@ -17,6 +41,16 @@ export interface Event {
   poster_url?: string;
   ticket_url?: string;
   affiliate_link?: string;
+  provider?: TicketProvider;
+  provider_event_id?: string;
+  provider_venue_id?: string;
+  provider_organization_id?: string;
+  provider_status?: ProviderStatus;
+  checkout_url?: string;
+  month?: string;
+  ticket_offers?: TicketOffer[];
+  raw_provider_payload?: unknown;
+  last_synced_at?: string;
   is_featured?: boolean;
   is_tonight?: boolean;
   tags?: string[];
@@ -41,6 +75,15 @@ export interface Venue {
   phone?: string;
   metro_station?: string;
   affiliated?: boolean;
+  provider?: TicketProvider;
+  provider_organization_id?: string;
+  provider_location_id?: string;
+  provider_venue_id?: string;
+  hero_video_url?: string;
+  hero_title?: string;
+  hero_subtitle?: string;
+  landing_copy?: string;
+  active?: boolean;
 }
 
 export type EventCategory =
