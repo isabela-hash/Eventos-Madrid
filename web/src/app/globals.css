@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Backgrounds — layered depth */
+  --color-base: #0B0B0F;
+  --color-surface: #13131A;
+  --color-elevated: #1C1C26;
+  --color-border: #2A2A36;
+
+  /* Brand gold — primary CTA only */
+  --color-gold: #C4973F;
+  --color-gold-dim: #8A6830;
+  --color-champagne: #E8D5A3;
+
+  /* Accents — use sparingly */
+  --color-garnet: #7D1F35;
+  --color-garnet-soft: #A83252;
+  --color-teal: #2A5F6B;
+  --color-teal-soft: #3D8A99;
+
+  /* Typography */
+  --color-text-primary: #F2EDE4;
+  --color-text-secondary: #B8B3A8;
+  --color-text-muted: #6E6A62;
+  --color-text-inverse: #0B0B0F;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-base);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-text-primary);
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-dim);
+    color: var(--color-champagne);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-dim);
+  }
+}
+
+@layer utilities {
+  /* Noise grain texture for hero sections */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Horizontal scroll without visible scrollbar */
+  .scroll-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
